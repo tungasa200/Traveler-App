@@ -1,0 +1,96 @@
+spring:
+  application:
+    name: traveler-app
+
+  # 프로파일 설정
+  profiles:
+    active: dev
+
+---
+# 개발 환경
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  # H2 인메모리 DB (개발용)
+  datasource:
+    url: jdbc:h2:mem:travelerdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+---
+# 운영 환경
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # MySQL (운영용)
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:travelerdb}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+---
+# 공통 설정
+spring:
+  config:
+    activate:
+      on-profile: default
+
+# 서버 설정
+server:
+  port: 8080
+
+# JWT 설정
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyForJwtTokenGenerationThatIsLongEnoughToBeSecure2024!}
+  access-token-expiration: 1800000    # 30분 (밀리초)
+  refresh-token-expiration: 1209600000 # 14일 (밀리초)
+
+# 외부 API 설정
+external-api:
+  openweathermap:
+    base-url: https://api.openweathermap.org/data/2.5
+    api-key: ${OPENWEATHERMAP_API_KEY:your-api-key}
+
+  exchange-rate:
+    base-url: https://www.koreaexim.go.kr/site/program/financial/exchangeJSON
+    api-key: ${EXCHANGE_RATE_API_KEY:your-api-key}
+
+# Google OAuth 설정
+google:
+  client-id: ${GOOGLE_CLIENT_ID:your-google-client-id}
+
+# 로깅 설정
+logging:
+  level:
+    root: INFO
+    com.travelerApp.demo: DEBUG
+    org.springframework.security: DEBUG
