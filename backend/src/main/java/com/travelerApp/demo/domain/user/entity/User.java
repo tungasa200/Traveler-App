@@ -16,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long seq;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -37,10 +37,18 @@ public class User {
 
     private LocalDateTime updatedAt;
 
+    private LocalDateTime lastLoginAt; // 마지막 로그인 일시
+
+    @Column(nullable = false)
+    private Boolean isActive = true; // 활성화 상태
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        if (this.isActive == null) {
+            this.isActive = true;
+        }
     }
 
     @PreUpdate
@@ -65,5 +73,20 @@ public class User {
     // 비밀번호 변경
     public void updatePassword(String password) {
         this.password = password;
+    }
+
+    // 마지막 로그인 시간 갱신
+    public void updateLastLoginAt() {
+        this.lastLoginAt = LocalDateTime.now();
+    }
+
+    // 계정 활성화
+    public void activate() {
+        this.isActive = true;
+    }
+
+    // 계정 비활성화
+    public void deactivate() {
+        this.isActive = false;
     }
 }
