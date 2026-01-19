@@ -44,6 +44,9 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("com.h2database:h2") // 개발용 인메모리 DB
 
+	// Dotenv (.env 파일 로드)
+	implementation("me.paulschwarz:spring-dotenv:4.0.0")
+
 	// Lombok
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

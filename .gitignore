@@ -35,3 +35,13 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Environment Variables ###
+.env
+*.env
+.env.*
+!.env.example
+
+### Secret Files ###
+**/application-secret.yml
+**/application-secret.properties

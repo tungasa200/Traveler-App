@@ -70,7 +70,7 @@ server:
 
 # JWT 설정
 jwt:
-  secret: ${JWT_SECRET:mySecretKeyForJwtTokenGenerationThatIsLongEnoughToBeSecure2024!}
+  secret: ${JWT_SECRET}
   access-token-expiration: 1800000    # 30분 (밀리초)
   refresh-token-expiration: 1209600000 # 14일 (밀리초)
 
@@ -78,15 +78,15 @@ jwt:
 external-api:
   openweathermap:
     base-url: https://api.openweathermap.org/data/2.5
-    api-key: ${OPENWEATHERMAP_API_KEY:your-api-key}
+    api-key: ${OPENWEATHERMAP_API_KEY}
 
   exchange-rate:
     base-url: https://www.koreaexim.go.kr/site/program/financial/exchangeJSON
-    api-key: ${EXCHANGE_RATE_API_KEY:your-api-key}
+    api-key: ${EXCHANGE_RATE_API_KEY}
 
 # Google OAuth 설정
 google:
-  client-id: ${GOOGLE_CLIENT_ID:your-google-client-id}
+  client-id: ${GOOGLE_CLIENT_ID}
 
 # 로깅 설정
 logging:
